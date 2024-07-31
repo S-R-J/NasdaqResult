@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet"/>
+    <style>
+        
+        *
+        {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+        .navigate
+        {
+            /* border: 2px black solid; */
+            height: 10vh;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 30px 20px;
+            box-shadow: 0px 5px 10px -5px
+        }
+        
+        .selectResultDiv
+        {
+            /* border: 2px black solid; */
+        }
+        
+        #selectResultbtn
+        {
+            background-color: #0087BA;
+            color: white;
+            height: 40px;
+            width: 150px;
+            border: none;
+            border-radius: 7px;
+            margin-right: 6vw;
+        }
+        
+        #selectResultbtn:hover
+        {
+            background-color: black;
+            cursor: pointer;
+        }
+        
+        .logo
+        {
+            /* flex: 1; */
+        }
+        
+        .searchbox {
+            position: relative;
+            display: inline-block;
+            margin-top: 20px;
+            border: 2px rgb(200, 200, 200) solid;
+            border-radius: 20px;
+            
+        }
+        
+        /* Hide the actual input */
+        #searchInput {
+            border: none;
+            border-radius: 20px;
+            text-align: center;
+            padding: 10px 20px;
+            font-size: 16px;
+            width: 200px; /* Adjust width as needed */
+            box-sizing: border-box;
+            transition: padding-top 0.3s ease;
+            
+        }
+        
+        #searchInput
+        {
+            outline: none;
+            border: none;
+        }
+        
+        
+        /* Style for the button */
+        #searchbtn {
+            background-color: white;
+            color: black;
+            height: 45px;
+            width: 50px;
+            border: none;
+            border-radius: 20px;
+            
+        }
+        
+        #searchbtn:hover {
+            cursor: pointer;
+            color: white;
+        }
+        
+        
+        #searchbtnImg:active
+        {
+            height: 10px;
+            
+        }
+        
+        /* Placeholder label styling */
+        .placeholder-label {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            font-size: 20px;
+            /* color: gray; */
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        
+        /* Style when input is focused */
+        #searchInput:focus + .placeholder-label,
+        #searchInput:not(:placeholder-shown) + .placeholder-label {
+            top: -15px;
+            left: 15px;
+            font-size: 16px;
+            color: black;
+        }
+        
+        
+        .topPart
+        {
+            display: flex;
+            justify-content: space-between;
+            /* border: 2px solid black; */
+            height: 40vh;
+            margin-top: 50px;
+        }
+        
+        .leftBox , .midBox , .rightBox
+        {
+            /* border: 2px solid black; */
+            height: 40vh;
+            width: 30vw;
+        }
+        
+        
+        
+        
+        .leftBox 
+        {
+            display: flex;
+            flex-direction: column;
+            align-items:flex-start;
+            padding-left: 100px;
+            
+        }
+        
+        .rightBox
+        {
+            display: flex;
+            flex-direction: column;
+            align-items:flex-end;
+            padding-right: 100px;
+        }
+        
+        .calypso , .jenkins , .execDate , .execTime , .startTime , .endTime
+        {
+            height: 8vh;
+            /* border: 2px solid black; */
+            /* padding: 50px; */
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 20px;
+            width: 12vw;
+            
+            background-color: rgba(0, 135, 186, 0.12);
+            /* background-color: rgb(255, 255, 255); */
+            border: 1px grey solid;
+            
+        }
+        
+        .calypso , .jenkins , .execDate , .execTime , .startTime , .endTime
+        {
+            display: flex;
+        }
+        
+        .calypso:hover , .jenkins:hover , .execDate:hover , .execTime:hover , .startTime:hover , .endTime:hover
+        {
+            background-color: rgb(255, 255, 255);
+            /* background-color: rgba(0, 135, 186, 0.12); */
+            border: 1px grey solid;
+            cursor: pointer;
+        }
+        
+        .Smallimg
+        {
+            /* border: 1px red solid; */
+            height: 100%;
+            width: 35%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            mix-blend-mode:darken;
+            
+        }
+        
+        .combine
+        {
+            /* border: 1px red solid; */
+            height: 80%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items:center;
+            margin: 5px;
+        }
+        
+        .innerText
+        {
+            font-size: 23px;
+            font-weight: bolder;
+        }
+        
+        
+        .midBox
+        {
+            display: flex;
+            flex-direction: column;
+            width: 50vw;
+        }
+        
+        .topHeading , .suiteName , .passfailBox
+        {
+            /* border: 2px green solid; */
+            height: 100%;
+        }
+        
+        .topHeading
+        {
+            display: flex;
+            justify-content: center;
+            font-size: 50px;
+            height: 70px;
+        }
+        
+        .suiteName
+        {
+            display: flex;
+            justify-content: center;
+            font-size: 40px;
+            height: 70px;
+        }
+        
+        .passfailBox
+        {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            
+        }
+        
+        .passBox , .failBox
+        {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            /* border: 2px blue solid; */
+            height: 85%;
+            width: 22%;
+            margin: 20px;
+            background-color: rgba(223, 253, 245, 1);
+            border-radius: 20px;
+            padding-bottom: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+            
+        }
+        
+        .passBox:hover 
+        {
+            /* box-shadow: 0px 0px 6px 0px; */
+            border: rgb(75, 255, 84) solid 1px;
+            /* border: 1px rgb(206, 206, 206) solid; */
+            box-shadow: 0px 0px 16px 1px rgb(134, 255, 223); 
+            cursor: pointer;
+        }
+        
+        .failBox:hover
+        {
+            border: rgb(255, 170, 170) solid 1px;
+            box-shadow: 0px 0px 13px 1px rgb(255, 151, 151);
+            cursor: pointer;
+            
+        }
+        
+        .failBox
+        {
+            background-color: rgba(255, 237, 237, 1);
+        }
+        
+        .passheading , .failheading
+        {
+            font-size: 25px;
+            font-weight: bold;
+        }
+        
+        .passedcount , .failedcount
+        {
+            font-size: 30px;
+            /* font-weight: bolder; */
+        }
+        
+        #passcountnum ,#failcountnum
+        {
+            font-weight: bolder;
+        }
+        
+        
+        
+        
+        
+        .table {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 50px;
+        }
+        
+        .gridjs tr
+        {
+            background-color: rgba(0, 135, 186, 0.12);
+        }
+        .gridjs tr:hover td {
+            background-color: rgba(226, 247, 255, 0.002);
+            cursor: pointer;
+        }
+        .gridjs th:hover {
+            background-color: lightblue;
+        }
+        .gg {
+            color: #ac0000;
+        }
+        .viewstp {
+            font-size: 15px;
+            background-color: white;
+            border-radius: 5px;
+            border: 2px solid #0087ba;
+            height: 40px;
+        }
+        .viewstp:hover {
+            background-color: #0087ba;
+            color: white;
+            cursor: pointer;
+        }
+        .f {
+            color: #0088ba12;
+        }
+        .pass {
+            color: green;
+            font-weight: bold;
+        }
+        .fail {
+            color: red;
+            font-weight: bold;
+        }
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 60%;
+            border-radius: 15px;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 90vh;
+            overflow-y: auto;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        /* Network error modal */
+        #networkErrorModal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        #networkErrorContent {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+            font-size: 20px;
+        }
+        element.style {
+            width: 13px;
+        }
+        
+        #stepsIframe
+        {
+            width: 100%; 
+            height: 100%; 
+            border: none;
+            /* border: 2px red solid; */
+            /* box-shadow: 0px 0px 1px 0px; */
+            /* border-radius: 10px; */
+            
+        }
+
+
+
+        body {
+            background-color: white;
+            color: black;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .navigate, 
+        .dark-mode .leftBox, 
+        .dark-mode .midBox, 
+        .dark-mode .rightBox, 
+        .dark-mode .selectResultDiv, 
+        .dark-mode .passBox, 
+        .dark-mode .failBox, 
+        .dark-mode .modal-content,
+        .dark-mode .searchbox {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .topHeading, 
+        .dark-mode .suiteName,
+        .dark-mode .placeholder-label,
+        .dark-mode .passedcount,
+        .dark-mode .failedcount {
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .Smallimg img {
+            filter: invert(1);
+        }
+        
+        .dark-mode .passBox {
+            background-color: rgba(34, 153, 84, 0.2);
+        }
+        
+        .dark-mode .failBox {
+            background-color: rgba(255, 99, 71, 0.2);
+        }
+        
+        .dark-mode .searchbox input, 
+        .dark-mode .searchbox button {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+        .dark-mode #searchInput {
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .modal-content {
+            background-color: #1e1e1e;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="navigate">
+        <div class="selectResultDiv"><button id="selectResultbtn">Select Result</button></div>
+        <div class="logo"><img src="/nasdaq.png" alt="" height="90px"></div>
+        <div class="searchbox">
+            <input id="searchInput" type="text" placeholder="">
+            <label for="searchInput" class="placeholder-label">Search</label>
+            <button id="searchbtn"><img id="searchbtnImg" src="/searchIcon.png" alt="" height="24px"></button>
+        </div>
+        <!-- <button id="darkModeToggle">Dark Mode</button> -->
+    </div>
+    
+    <div class="topPart">
+        
+        <!-- LeftBox -->
+        <div class="leftBox">
+            <div class="calypso">
+                <div class="Smallimg"><img src="/adenzalogo.jpg" alt="" height="50px"></div>
+                <div class="combine"><div class="smallTitle">Calypso Version</div><div class="innerText">17.24.7.1</div></div>
+            </div>
+            <div class="jenkins">
+                <div class="Smallimg"><img src="/jenkinslogo.jpg" alt="" height="60px"></div>
+                <div class="combine"><div class="smallTitle">Jenkins URL</div><div class="innerText"><a href="https://hfserver.calypso.com/jenkins/job/MAINTENANCE-PIPELINE-MULTIBRANCH/job/mr17-release/">Click here</a></div></div>
+            </div>
+            <div class="execDate">
+                <div class="Smallimg"><img src="/calenderlogo.jpeg" alt="" height="50px"></div>
+                <div class="combine"><div class="smallTitle">Execution Date</div><div class="innerText">30/07/2024</div></div>
+            </div>
+        </div>
+        
+        <!-- MidBox -->
+        <div class="midBox">
+            <div class="topHeading">Text Execution Result</div>
+            <div class="suiteName">- Market Risk -</div>
+            <div class="passfailBox">
+                <div class="passBox">
+                    <div class="passImage"><img src="/passlogo.jpeg" alt="" height="100px"></div>
+                    <div class="passheading">Yeaa !</div>
+                    <div class="passedcount">Passed : <span id="passcountnum">3</span></div>
+                </div>
+                <div class="failBox">
+                    <div class="failImage"><img src="/faillogo.jpeg" alt="" height="100px"></div>
+                    <div class="failheading">ohh No !</div>
+                    <div class="failedcount">Failed : <span id="failcountnum">2</span></div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        
+        <!-- RightBox -->
+        <div class="rightBox">
+            <div class="execTime">
+                <div class="Smallimg"><img src="/totaltimelogo.jpeg" alt="" height="50px"></div>
+                <div class="combine"><div class="smallTitle">Execution Time</div><div class="innerText">34 min 17 sec</div></div>
+            </div>
+            <div class="startTime">
+                <div class="Smallimg"><img src="/starttimelogo.jpeg" alt="" height="50px"></div>
+                <div class="combine"><div class="smallTitle">Start Time</div><div class="innerText">4:05:20 PM</div></div>
+            </div>
+            <div class="endTime">
+                <div class="Smallimg"><img src="/endtimelogo.jpeg" alt="" height="50px"></div>
+                <div class="combine"><div class="smallTitle">End Time</div><div class="innerText">4:39:55 PM</div></div>
+            </div>
+        </div>
+        
+        
+    </div>
+    
+    <div class="table">
+        <div id="wrapper"></div>
+    </div>
+    <!-- Steps Modal -->
+    <div id="stepsModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="stepsModalHeader"></h2>
+            <iframe id="stepsIframe"></iframe>
+        </div>
+    </div>
+    <!-- Network Error Modal -->
+    <div id="networkErrorModal">
+        <div id="networkErrorContent">
+            Network not connected. Please check your internet connection and try again.
+        </div>
+    </div>
+    <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+        // Check if Grid.js and ApexCharts are loaded
+        setTimeout(() => {
+            if (typeof gridjs === 'undefined' || typeof ApexCharts === 'undefined') {
+                document.getElementById('networkErrorModal').style.display = 'block';
+            } else {
+                initializeGrid();
+                initializeCharts();
+            }
+        }, 1000); // 5-second timeout
+        
+        function initializeGrid() {
+            new gridjs.Grid({
+                columns: [
+                "Test Case ID",
+                {
+                    name: "Result",
+                    formatter: (cell) => {
+                        const color = cell === "PASS" ? "green" : "red";
+                        const weight = "bold";
+                        return gridjs.html(`<span style="color: ${color}; font-weight: ${weight};">${cell}</span>`);
+                    }
+                },
+                "Description",
+                "Expected Result",
+                "Actual Result",
+                {
+                    name: "Steps",
+                    formatter: (cell, row) => {
+                        return gridjs.html(`<button class="viewstp" onclick="handleStepsClick('${row.cells[0].data}', '${row.cells[1].data}')">View Steps</button>`);
+                    }
+                },
+                {
+                    name: "Screenshots",
+                    formatter: (cell, row) => {
+                        return gridjs.html(`<button class="viewstp" onclick="handleScreenshotsClick('${row.cells[0].data}')">View Screenshot</button>`);
+                    }
+                }
+                ],
+                sort: true,
+                data: [
+                ["TC01", "PASS", "Validate DH_OBT", "Excel Files Should Match Successfully", "Match NOT Success", "TCSteps", "Check Screenshot"],
+                ["TC02", "FAIL", "Validate DH_OBT", "Excel Files Should Match Successfully", "Match NOT Success", "TCSteps", "Check Screenshot"],
+                ["TC03", "PASS", "Validate DH_OBT", "Excel Files Should Match Successfully", "Match NOT Success", "TCSteps", "Check Screenshot"],
+                ["TC04", "PASS", "Validate DH_OBT", "Excel Files Should Match Successfully", "Match NOT Success", "TCSteps", "Check Screenshot"],
+                ["TC05", "FAIL", "Validate DH_OBT", "Excel Files Should Match Successfully", "Match NOT Success", "TCSteps", "Check Screenshot"]
+                ],
+                style: {
+                    table: {},
+                    th: {
+                        'background-color': '#0088ba12',
+                        'color': 'black',
+                        'text-align': 'center',
+                    },
+                    td: {
+                        'text-align': 'center'
+                    }
+                }
+            }).render(document.getElementById("wrapper"));
+        }
+        
+        function initializeCharts() {
+            var optionsPass = {
+                chart: {
+                    height: 280,
+                    type: "radialBar",
+                },
+                series: [70],
+                plotOptions: {
+                    radialBar: {
+                        hollow: {
+                            margin: 15,
+                            size: "70%"
+                        },
+                        dataLabels: {
+                            showOn: "always",
+                            name: {
+                                offsetY: -10,
+                                show: true,
+                                color: "#00ac00",
+                                fontSize: "13px"
+                            },
+                            value: {
+                                color: "#111",
+                                fontSize: "30px",
+                                show: true
+                            }
+                        }
+                    }
+                },
+                colors: ["#00ac00"],
+                stroke: {
+                    lineCap: "round",
+                },
+                labels: ["PASS"]
+            };
+            
+            var chartPass = new ApexCharts(document.querySelector("#PASS"), optionsPass);
+            chartPass.render();
+            
+            var optionsFail = {
+                chart: {
+                    height: 280,
+                    type: "radialBar"
+                },
+                series: [30],
+                plotOptions: {
+                    radialBar: {
+                        hollow: {
+                            margin: 15,
+                            size: "70%"
+                        },
+                        dataLabels: {
+                            showOn: "always",
+                            name: {
+                                offsetY: -10,
+                                show: true,
+                                color: "#ac0000",
+                                fontSize: "13px"
+                            },
+                            value: {
+                                color: "#111",
+                                fontSize: "30px",
+                                show: true
+                            }
+                        }
+                    }
+                },
+                colors: ["#ac0000"],
+                stroke: {
+                    lineCap: "round",
+                },
+                labels: ["FAIL"]
+            };
+            
+            var chartFail = new ApexCharts(document.querySelector("#FAIL"), optionsFail);
+            chartFail.render();
+            
+            var optionsTotal = {
+                chart: {
+                    height: 280,
+                    type: "radialBar"
+                },
+                series: [100],
+                plotOptions: {
+                    radialBar: {
+                        hollow: {
+                            margin: 15,
+                            size: "70%"
+                        },
+                        dataLabels: {
+                            showOn: "always",
+                            name: {
+                                offsetY: -10,
+                                show: true,
+                                color: "#888",
+                                fontSize: "13px"
+                            },
+                            value: {
+                                color: "#111",
+                                fontSize: "30px",
+                                show: true
+                            }
+                        }
+                    }
+                },
+                stroke: {
+                    lineCap: "round",
+                },
+                labels: ["TOTAL"]
+            };
+            
+            var chartTotal = new ApexCharts(document.querySelector("#TOTAL"), optionsTotal);
+            chartTotal.render();
+        }
+        
+        function handleStepsClick(testCaseId, result) {
+            // Calculate the PASS and FAIL counts based on the result parameter
+            const passCount = result === "PASS" ? 1 : 0;
+            const failCount = result === "FAIL" ? 1 : 0;
+            
+            // Set the Test Case ID and iframe source in the modal header
+            document.getElementById('stepsModalHeader').innerHTML = `Test Case ID: ${testCaseId}`;
+            document.getElementById('stepsIframe').src = `/TCSteps/steps_${testCaseId}.html?passCount=${passCount}&failCount=${failCount}`;
+            document.getElementById('stepsModal').style.display = 'block';
+        }
+        
+        function handleScreenshotsClick(testCaseId) {
+            // alert(`View Screenshot button clicked for Test Case ID: ${testCaseId}`);
+            alert(`ispe abhi kaam chalu hai !!`);
+            
+        }
+        
+        // Close the steps modal when the user clicks on <span> (x)
+            document.querySelector('.close').onclick = function() {
+                document.getElementById('stepsModal').style.display = 'none';
+            }
+            
+            // Close the steps modal when the user clicks anywhere outside of the modal
+            window.onclick = function(event) {
+                if (event.target == document.getElementById('stepsModal')) {
+                    document.getElementById('stepsModal').style.display = 'none';
+                }
+            }
+        </script>
+        <script>
+            const toggleButton = document.getElementById('darkModeToggle');
+            const bodyElement = document.body;
+    
+            toggleButton.addEventListener('click', () => {
+                bodyElement.classList.toggle('dark-mode');
+            });
+        </script>
+        
+    </body>
+    </html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Text</title>
+    <style>
+        .highlight {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <p>This is a sample text. Try searching for a specific term in this text to see how it is highlighted.</p>
+    <div>Another section with some more text to search within.</div>
+    <input type="text" id="searchInput" placeholder="Enter text to search">
+    <button onclick="searchText()">Search</button>
+
+    <script>
+        function searchText() {
+            const searchTerm = document.getElementById('searchInput').value;
+            const body = document.body;
+            const regex = new RegExp(`(${searchTerm})`, 'gi');
+
+            function highlightText(node) {
+                if (node.nodeType === Node.TEXT_NODE) {
+                    if (node.textContent.match(regex)) {
+                        const newHTML = node.textContent.replace(regex, '<span class="highlight">$1</span>');
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = newHTML;
+                        while (tempDiv.firstChild) {
+                            node.parentNode.insertBefore(tempDiv.firstChild, node);
+                        }
+                        node.parentNode.removeChild(node);
+                    }
+                } else if (node.nodeType === Node.ELEMENT_NODE) {
+                    node.childNodes.forEach(highlightText);
+                }
+            }
+
+            highlightText(body);
+        }
+    </script>
+</body>
+</html>

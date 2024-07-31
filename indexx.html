@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Execution </title>
+    <style>
+        #fileDiv {
+            display: none;
+            position: absolute; /* Make the div absolute */
+            background-color: #0088ba22;
+            padding: 5px; /* Remove default padding */
+            z-index: 1000; /* Ensure it is on top of other elements */
+            margin-top: 50px;
+            width: 127px;
+        }
+        #fileList {
+            list-style-type: none; /* Remove default list styling */
+            padding-left: 0; /* Remove default padding */
+        }
+        button {
+            margin-top: 20px;
+        }
+        #content {
+            margin-top: 20px;
+            width: 100%;
+            height: 80vh;
+            border: none;
+            /* background-color: rgba(0, 0, 0, 0.044); */
+        }
+        #showFileDivBtn {
+            background-color: #0087ba;
+            color: white;
+            height: 40px;
+            border-radius: 5px;
+            border: none;
+        }
+        #showFileDivBtn:hover {
+            box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.4);
+            border: 2px #0087ba solid;
+            cursor: pointer;
+        }
+        .cont {
+            display: flex;
+            justify-content: left;
+            align-items: start;
+            box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            position: relative; /* Ensure the parent div is positioned relatively */
+        }
+        .image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 80%;
+        }
+        .buttonarea {
+            display: flex;
+            flex-direction: column;
+            width: 140px;
+        }
+        .btnlist {
+            background-color: white;
+            border: 1px black solid;
+            border-radius: 5px;
+            height: 25px;
+        }
+        .btnlist:hover {
+            box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="cont">
+        <div class="buttonarea">
+            <button id="showFileDivBtn">Select Result</button>
+            <div id="fileDiv">
+                <ul id="fileList">
+                    <li><button class="btnlist" data-file="Results/MarketRisk1.html"></button></li>
+                    <li><button class="btnlist" data-file="Results/MarketRisk2.html"></button></li>
+                    <li><button class="btnlist" data-file="Results/MarketRisk3.html"></button></li>
+                    <li><button class="btnlist" data-file="Results/FOWS1.html"></button></li>
+                    <li><button class="btnlist" data-file="Results/FOWS2.html"></button></li>
+                    <li><button class="btnlist" data-file="Results/FOWS3.html"></button></li>
+                </ul> 
+            </div>
+        </div>
+        <div class="image">
+            <img src="/nasdaq.png" alt="" height="55px">
+        </div>
+    </div>
+    <iframe id="content"></iframe>
+
+    <script>
+        const showFileDivBtn = document.getElementById('showFileDivBtn');
+        const fileDiv = document.getElementById('fileDiv');
+
+        showFileDivBtn.addEventListener('click', function(event) {
+            fileDiv.style.display = (fileDiv.style.display === 'none' || fileDiv.style.display === '') ? 'block' : 'none';
+            event.stopPropagation(); // Prevent event from bubbling up to document
+        });
+
+        document.addEventListener('click', function() {
+            fileDiv.style.display = 'none';
+        });
+
+        fileDiv.addEventListener('click', function(event) {
+            event.stopPropagation(); // Prevent event from bubbling up to document
+        });
+
+        document.querySelectorAll('#fileList button').forEach(button => {
+            const file = button.getAttribute('data-file');
+            const fileName = file.split('/').pop(); // Get file name from the file path
+            button.textContent = fileName; // Set button text to file name
+            fetch(file)
+                .then(response => {
+                    if (!response.ok) {
+                        button.style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking file existence:', error);
+                    button.style.display = 'none';
+                });
+
+            button.addEventListener('click', function() {
+                document.getElementById('content').src = file;
+                fileDiv.style.display = 'none';
+            });
+        });
+
+        // Automatically load the first HTML file into the iframe when the page loads
+        window.addEventListener('load', function() {
+            const firstFileButton = document.querySelector('#fileList button');
+            if (firstFileButton) {
+                const firstFile = firstFileButton.getAttribute('data-file');
+                document.getElementById('content').src = firstFile;
+            }
+        });
+
+        // Add click event listener to iframe
+        document.getElementById('content').addEventListener('load', function() {
+            const iframeDocument = document.getElementById('content').contentWindow.document;
+            iframeDocument.addEventListener('click', function() {
+                fileDiv.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -276,7 +276,7 @@
             /* background: rgb(32,195,104);
             background: linear-gradient(0deg, rgba(32,195,104,1) 0%, rgba(107,219,121,1) 92%); */
             border-radius: 20px;
-            padding-bottom: 10px;
+            /* padding-bottom: 10px; */
             padding-left: 10px;
             padding-right: 10px;
             
@@ -348,7 +348,7 @@
         
         .passheading , .failheading , .totalheading
         {
-            font-size: 25px;
+            font-size: 20px;
             font-weight: bold;
             margin-top: 20px;
             
@@ -364,9 +364,11 @@
         
         
         
-        #passcountnum ,#failcountnum
+        #passcountnum ,#failcountnum , #totalcountnum
         {
+            font-size: 50px;
             font-weight: bolder;
+            margin-top: 5px;
         }
         
         
@@ -388,17 +390,23 @@
             content: url('./equalslogoinvert.png'); 
         }
 
-        .passBox:hover .passedcount, .failBox:hover .failedcount
+        .passBox:hover .passedcount, .failBox:hover .failedcount , .totalBox:hover .totalcount
         {
             color: white;
             text-shadow: 1px 1px 2px rgb(0, 0, 0);
         }
 
-        .totalBox:hover .totalcount
+        .passBox:hover #passcountnum, .failBox:hover #failcountnum , .totalBox:hover #totalcountnum
         {
             color: white;
             text-shadow: 1px 1px 2px rgb(0, 0, 0);
         }
+
+        /* .totalBox:hover .totalcount
+        {
+            color: white;
+            text-shadow: 1px 1px 2px rgb(0, 0, 0);
+        } */
 
         
         .topHeading img{
@@ -623,19 +631,22 @@
             <div class="passfailBox">
                 <div class="passBox">
                     <div class="passImage"><img src="./yeslogo.png" alt="" height="80px"></div>
-                    <div class="passheading">Yeaa !</div>
-                    <div class="passedcount">Passed : <span id="passcountnum">3</span></div>
+                    <!-- <div class="passheading">Yeaa !</div> -->
+                    <div class="passedcount">Passed</div>
+                    <span id="passcountnum">3</span>
                 </div>
                 <div class="failBox">
                     <div class="failImage"><img src="./nologo.png" alt="" height="80px"></div>
-                    <div class="failheading">ohh No !</div>
-                    <div class="failedcount">Failed : <span id="failcountnum">2</span></div>
+                    <!-- <div class="failheading">ohh No !</div> -->
+                    <div class="failedcount">Failed</div>
+                    <span id="failcountnum">2</span>
                 </div>
                 
                 <div class="totalBox">
                     <div class="totalImage"><img src="./equalslogo.png" alt="" height="80px"></div>
-                    <div class="totalheading">out of !</div>
-                    <div class="totalcount">Total : <span id="failcountnum">5</span></div>
+                    <!-- <div class="totalheading">out of !</div> -->
+                    <div class="totalcount">Total</div>
+                    <span id="totalcountnum">5</span>
                 </div>
                 
             </div>

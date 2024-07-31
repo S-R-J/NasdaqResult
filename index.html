@@ -603,37 +603,37 @@
         <!-- LeftBox -->
         <div class="leftBox">
             <div class="calypso">
-                <div class="Smallimg"><img src="/adenzalogo.jpg" alt="" height="50px"></div>
+                <div class="Smallimg"><img src="./adenzalogo.jpg" alt="" height="50px"></div>
                 <div class="combine"><div class="smallTitle">Calypso Version</div><div class="innerText">17.24.7.1</div></div>
             </div>
             <div class="jenkins">
-                <div class="Smallimg"><img src="/jenkinslogo.jpg" alt="" height="60px"></div>
+                <div class="Smallimg"><img src="./jenkinslogo.jpg" alt="" height="60px"></div>
                 <div class="combine"><div class="smallTitle">Jenkins URL</div><div class="innerText"><a href="https://hfserver.calypso.com/jenkins/job/MAINTENANCE-PIPELINE-MULTIBRANCH/job/mr17-release/">Click here</a></div></div>
             </div>
             <div class="execDate">
-                <div class="Smallimg"><img src="/calenderlogo.jpeg" alt="" height="50px"></div>
+                <div class="Smallimg"><img src="./calenderlogo.jpeg" alt="" height="50px"></div>
                 <div class="combine"><div class="smallTitle">Execution Date</div><div class="innerText">30/07/2024</div></div>
             </div>
         </div>
         
         <!-- MidBox -->
         <div class="midBox">
-            <div class="topHeading"><img src="/uftlogo.jpeg" alt="">UFT Execution Result</div>
+            <div class="topHeading"><img src="./uftlogo.jpeg" alt="">UFT Execution Result</div>
             <div class="suiteName">- Market Risk -</div>
             <div class="passfailBox">
                 <div class="passBox">
-                    <div class="passImage"><img src="/yeslogo.png" alt="" height="80px"></div>
+                    <div class="passImage"><img src="./yeslogo.png" alt="" height="80px"></div>
                     <div class="passheading">Yeaa !</div>
                     <div class="passedcount">Passed : <span id="passcountnum">3</span></div>
                 </div>
                 <div class="failBox">
-                    <div class="failImage"><img src="/nologo.png" alt="" height="80px"></div>
+                    <div class="failImage"><img src="./nologo.png" alt="" height="80px"></div>
                     <div class="failheading">ohh No !</div>
                     <div class="failedcount">Failed : <span id="failcountnum">2</span></div>
                 </div>
                 
                 <div class="totalBox">
-                    <div class="totalImage"><img src="/equalslogo.png" alt="" height="80px"></div>
+                    <div class="totalImage"><img src="./equalslogo.png" alt="" height="80px"></div>
                     <div class="totalheading">out of !</div>
                     <div class="totalcount">Total : <span id="failcountnum">5</span></div>
                 </div>
@@ -646,15 +646,15 @@
         <!-- RightBox -->
         <div class="rightBox">
             <div class="execTime">
-                <div class="Smallimg"><img src="/totaltimelogo.jpeg" alt="" height="50px"></div>
+                <div class="Smallimg"><img src="./totaltimelogo.jpeg" alt="" height="50px"></div>
                 <div class="combine"><div class="smallTitle">Execution Time</div><div class="innerText">34 min 17 sec</div></div>
             </div>
             <div class="startTime">
-                <div class="Smallimg"><img src="/starttimelogo.jpeg" alt="" height="50px"></div>
+                <div class="Smallimg"><img src="./starttimelogo.jpeg" alt="" height="50px"></div>
                 <div class="combine"><div class="smallTitle">Start Time</div><div class="innerText">4:05:20 PM</div></div>
             </div>
             <div class="endTime">
-                <div class="Smallimg"><img src="/endtimelogo.jpeg" alt="" height="50px"></div>
+                <div class="Smallimg"><img src="./endtimelogo.jpeg" alt="" height="50px"></div>
                 <div class="combine"><div class="smallTitle">End Time</div><div class="innerText">4:39:55 PM</div></div>
             </div>
         </div>
@@ -898,7 +898,7 @@
             
             // Set the Test Case ID and iframe source in the modal header
             document.getElementById('stepsModalHeader').innerHTML = `Test Case ID: ${testCaseId}`;
-            document.getElementById('stepsIframe').src = `/TCSteps/steps_${testCaseId}.html?passCount=${passCount}&failCount=${failCount}`;
+            document.getElementById('stepsIframe').src = `./TCSteps/steps_${testCaseId}.html?passCount=${passCount}&failCount=${failCount}`;
             document.getElementById('stepsModal').style.display = 'block';
         }
         

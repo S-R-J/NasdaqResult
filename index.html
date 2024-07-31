@@ -898,7 +898,7 @@
             
             // Set the Test Case ID and iframe source in the modal header
             document.getElementById('stepsModalHeader').innerHTML = `Test Case ID: ${testCaseId}`;
-            document.getElementById('stepsIframe').src = `./TCSteps/steps_${testCaseId}.html?passCount=${passCount}&failCount=${failCount}`;
+            document.getElementById('stepsIframe').src = `./steps_${testCaseId}.html?passCount=${passCount}&failCount=${failCount}`;
             document.getElementById('stepsModal').style.display = 'block';
         }
         

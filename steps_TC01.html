@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Case Steps</title>
+    <link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+        .steps-container {
+            margin: 20px;
+        }
+        .counts {
+            margin-bottom: 10px;
+        }
+        .counts p {
+            margin: 5px 0;
+        }
+        .gridjs tr:hover td {
+            background-color: rgba(35, 157, 197, 0.151);
+        }
+        .gridjs th:hover {
+            background-color: lightblue;
+        }
+    </style>
+</head>
+<body>
+    <div class="steps-container">
+        <div id="countsWrapper" class="counts"></div>
+        <div id="stepsWrapper"></div>
+    </div>
+
+    <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+    <script>
+        const stepsData = [
+            [1, "PASS", "Open the application."],
+            [2, "FAIL", "Navigate to the login page."],
+            [3, "PASS", "Enter the username and password."],
+            [4, "PASS", "Click the login button."],
+            [5, "FAIL", "Verify the dashboard is displayed."],
+            [6, "PASS", "Perform additional checks."],
+            [7, "FAIL", "Check the report generation."],
+            [8, "PASS", "Validate the output files."],
+            [9, "PASS", "Ensure there are no errors in the logs."],
+            [10, "PASS", "Logout from the application."],
+            [11, "FAIL", "Close the browser."]
+        ];
+
+        // Count PASS and FAIL occurrences
+        let passCount = 0;
+        let failCount = 0;
+        stepsData.forEach(step => {
+            if (step[1] === "PASS") {
+                passCount++;
+            } else if (step[1] === "FAIL") {
+                failCount++;
+            }
+        });
+
+        // Display the counts above the steps
+        const countsWrapper = document.getElementById('countsWrapper');
+        countsWrapper.innerHTML = `<p>PASS Count: <span style="color: green; font-weight: bold;">${passCount}</span></p>
+                                   <p>FAIL Count: <span style="color: red; font-weight: bold;">${failCount}</span></p>`;
+
+        new gridjs.Grid({
+            columns: [
+                {
+                    name: "Line",
+                    width: '90px' 
+                },
+                {
+                    name: "Pass/Fail",
+                    width: '120px',
+                    formatter: (cell) => {
+                        const color = cell === "PASS" ? "green" : "red";
+                        const weight = "bold";
+                        return gridjs.html(`<span style="color: ${color}; font-weight: ${weight};">${cell}</span>`);
+                    }
+                },
+                "Steps"
+            ],
+            data: stepsData,
+            sort: true,
+            style: {
+                table: {},
+                th: {
+                    'background-color': '#0088ba12',
+                    'color': 'black',
+                    'text-align': 'center',
+                },
+                td: {
+                    'text-align': 'center'
+                }
+            }
+        }).render(document.getElementById("stepsWrapper"));
+    </script>
+</body>
+</html>
